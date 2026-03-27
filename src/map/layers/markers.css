@@ -1,0 +1,59 @@
+.serving_cell {
+  color: #00ff00;
+}
+
+.neighbor_cell {
+  color: #00ffff;
+}
+
+.signal_sample {
+  border-radius: 50%;
+}
+
+.track_point {
+  color: #000000;
+}
+
+.user_probe {
+  color: #9c27b0;
+}
+
+.map-legend {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: 12px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+.map-legend h4 {
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+
+.map-legend ul {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.map-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.legend-icon {
+  display: inline-flex;
+  width: 12px;
+  justify-content: center;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
