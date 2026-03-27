@@ -1,0 +1,624 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+  <Document>
+    <open>1</open>
+    <name>Netmonitor</name>
+    <Style id="styletp">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.4</width>
+        <gx:outerColor>ffffffff</gx:outerColor>
+        <gx:outerWidth>0.2</gx:outerWidth>
+      </LineStyle>
+    </Style>
+    <Style id="style_cur">
+      <IconStyle>
+        <color>ff00ff00</color>
+        <scale>0.8</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/962-wht-diamond-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_neigh">
+      <IconStyle>
+        <color>ff00ffff</color>
+        <scale>0.8</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/962-wht-diamond-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_0">
+      <IconStyle>
+        <color>ffffffff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_10">
+      <IconStyle>
+        <color>ff0033ff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_20">
+      <IconStyle>
+        <color>ff0066ff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_30">
+      <IconStyle>
+        <color>ff0099ff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_40">
+      <IconStyle>
+        <color>ff00ccff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_50">
+      <IconStyle>
+        <color>ff00ffff</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_60">
+      <IconStyle>
+        <color>ff00ffcc</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_70">
+      <IconStyle>
+        <color>ff00ff99</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_80">
+      <IconStyle>
+        <color>ff00ff66</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_90">
+      <IconStyle>
+        <color>ff00ff33</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="style_100">
+      <IconStyle>
+        <color>ff00ff00</color>
+        <scale>0.6</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/959-wht-circle-blank.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Placemark>
+      <name>Gps Change Path</name>
+      <styleUrl>#styletp</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates></coordinates>
+      </LineString>
+    </Placemark>
+    <Folder>
+      <open>1</open>
+      <name>MCC: 250 MNC: 02</name>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 5973 RNC: 0 PSC: 23</name>
+        <Placemark>
+          <name>3322/5973 GSM</name>
+          <description>~1016 (m), Владимирская область, Р75, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.63241,56.40548</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 12539 RNC: 0 PSC: 12</name>
+        <Placemark>
+          <name>3322/12539 GSM</name>
+          <description>~765 (m), Владимирская область, Р75, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.581463,56.417145</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 18191 RNC: 0 PSC: 44</name>
+        <Placemark>
+          <name>3322/18191 GSM</name>
+          <description>~705 (m), Владимирская область, Александров-Струнино, Владимирская обл., Россия, 601671</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.598423,56.35239</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 48201 RNC: 0 PSC: 49</name>
+        <Placemark>
+          <name>3322/48201 GSM</name>
+          <description>~952 (m), Владимирская область, Р75, Следнево, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.593616,56.415623</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 63873 RNC: 0 PSC: 33</name>
+        <Placemark>
+          <name>3322/63873 GSM</name>
+          <description>~955 (m), Владимирская область, Р75, Следнево, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.593353,56.415607</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3373 CID: 337989:9 RNC: 0 PSC: 49</name>
+        <Placemark>
+          <name>3373/86525193 LTE</name>
+          <description>~1023 (m), Владимирская область, Александров-Струнино, Владимирская обл., Россия, 601671</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.595573,56.35736</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6196 RNC: 0 PSC: 3</name>
+        <Placemark>
+          <name>43305/6196 GSM</name>
+          <description>~790 (m), Владимирская область, Р75, Владимирская обл., Россия</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.642166,56.402279</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6283 RNC: 0 PSC: 25</name>
+        <Placemark>
+          <name>43305/6283 GSM</name>
+          <description>~1077 (m), Владимирская область, Р75, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.559502,56.417847</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6452 RNC: 0 PSC: 25</name>
+        <Placemark>
+          <name>43305/6452 GSM</name>
+          <description>~1485 (m), Владимирская область, ул. Островского, 6а, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.586063,56.3705</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6453 RNC: 0 PSC: 19</name>
+        <Placemark>
+          <name>43305/6453 GSM</name>
+          <description>~1230 (m), Владимирская область, Струнино, Владимирская обл., Россия, 601602</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.523754,56.345001</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 8424 RNC: 0 PSC: 25</name>
+        <Placemark>
+          <name>43305/8424 GSM</name>
+          <description>~614 (m), Владимирская область, Александров-Струнино, Владимирская обл., Россия</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.631634,56.362656</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 12539 RNC: 0 PSC: 252</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 38359 RNC: 0 PSC: 44</name>
+        <Placemark>
+          <name>43305/38359 GSM</name>
+          <description>~1155 (m), Владимирская область, Р75, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>38.63496,56.404663</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 58239 RNC: 0 PSC: 47</name>
+        <Placemark>
+          <name>43305/58239 GSM</name>
+          <description>~1621 (m), Владимирская область, ул. Островского, 5, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.58632,56.371754</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49503 RNC: 30 PSC: 454</name>
+        <Placemark>
+          <name>43305/49503 WCDMA</name>
+          <description>~696 (m), Владимирская область, Р75, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.628674,56.40679</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49961 RNC: 30 PSC: 260</name>
+        <Placemark>
+          <name>43305/49961 WCDMA</name>
+          <description>~928 (m), Владимирская область, Р75, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.589016,56.4163</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49962 RNC: 30 PSC: 252</name>
+        <Placemark>
+          <name>43305/49962 WCDMA</name>
+          <description>~1136 (m), Владимирская область, ул. Лермонтова, 3В, Струнино, Владимирская обл., Россия, 601672</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.582767,56.373081</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 63729 RNC: 30 PSC: 293</name>
+        <Placemark>
+          <name>43305/63729 WCDMA</name>
+          <description>~897 (m), Владимирская область, Струнино, Владимирская обл., Россия, 601620</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.585903,56.416744</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 63730 RNC: 30 PSC: 301</name>
+        <Placemark>
+          <name>43305/63730 WCDMA</name>
+          <description>~1048 (m), Владимирская область, Заречная ул., 9, Струнино, Владимирская обл., Россия, 601672</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.581455,56.36903</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:8 RNC: 0 PSC: 207</name>
+        <Placemark>
+          <name>43305/86831880 LTE</name>
+          <description>~1268 (m), Владимирская область, ул. Суворова, 5, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.58767,56.372467</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:22 RNC: 0 PSC: 90</name>
+        <Placemark>
+          <name>43305/86831894 LTE</name>
+          <description>~1397 (m), Владимирская область, ул. Островского, 5, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.58747,56.371536</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:32 RNC: 0 PSC: 207</name>
+        <Placemark>
+          <name>43305/86831904 LTE</name>
+          <description>~1322 (m), Владимирская область, ул. Суворова, 5, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.587513,56.372494</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+    </Folder>
+    <Folder>
+      <open>1</open>
+      <name>MCC: 250 MNC: 11</name>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 5973 RNC: 0 PSC: 23</name>
+        <Placemark>
+          <name>3322/5973 GSM</name>
+          <description>~23817 (m), Владимирская область, Болдино, Владимирская обл., Россия, 601113</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>39.783905,55.993008</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 12539 RNC: 0 PSC: 12</name>
+        <Placemark>
+          <name>3322/12539 GSM</name>
+          <description>~24709 (m), Владимирская область, Болдино, Владимирская обл., Россия, 601113</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>39.783919,55.99578</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 48201 RNC: 0 PSC: 49</name>
+        <Placemark>
+          <name>3322/48201 GSM</name>
+          <description>~24709 (m), Владимирская область, Болдино, Владимирская обл., Россия, 601113</description>
+          <styleUrl>#style_neigh</styleUrl>
+          <Point>
+            <coordinates>39.783919,55.99578</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3322 CID: 63873 RNC: 0 PSC: 33</name>
+        <Placemark>
+          <name>3322/63873 GSM</name>
+          <description>~24709 (m), Владимирская область, Болдино, Владимирская обл., Россия, 601113</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>39.783919,55.99578</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 3373 CID: 337989:9 RNC: 0 PSC: 49</name>
+        <Placemark>
+          <name>3373/86525193 LTE</name>
+          <description>~16352 (m), Владимирская область, ул. Текстильная, Александров, Владимирская обл., Россия, 601655</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.733494,56.378</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6196 RNC: 0 PSC: 3</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6283 RNC: 0 PSC: 25</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 6452 RNC: 0 PSC: 25</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 58239 RNC: 0 PSC: 47</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49503 RNC: 30 PSC: 454</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49961 RNC: 30 PSC: 260</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 49962 RNC: 30 PSC: 252</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 63730 RNC: 30 PSC: 301</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 33597:3 RNC: 0 PSC: 85</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 33597:9 RNC: 0 PSC: 94</name>
+        <Placemark>
+          <name>43305/8600841 LTE</name>
+          <description>~250 (m), Владимирская область, Заречная ул., 14, Струнино, Владимирская обл., Россия, 601671</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.582062,56.366875</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330104:21 RNC: 0 PSC: 411</name>
+        <Placemark>
+          <name>43305/84506645 LTE</name>
+          <description>~1082 (m), Владимирская область, кв-л Дубки, 10, Струнино, Владимирская обл., Россия, 601672</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.57785,56.374565</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330104:22 RNC: 0 PSC: 161</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330104:32 RNC: 0 PSC: 161</name>
+        <Placemark>
+          <name>43305/84506656 LTE</name>
+          <description>~534 (m), Владимирская область, Заречная ул., 32, Струнино, Владимирская обл., Россия, 601671</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.585079,56.363808</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330484:8 RNC: 0 PSC: 161</name>
+        <Placemark>
+          <name>43305/84603912 LTE</name>
+          <description>~376 (m), Владимирская область, ул. Орджоникидзе, 86, Струнино, Владимирская обл., Россия, 601671</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.588863,56.362095</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330484:21 RNC: 0 PSC: 411</name>
+        <Placemark>
+          <name>43305/84603925 LTE</name>
+          <description>~250 (m), Владимирская область, Струнино, Соколово, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.58543,56.39657</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 330484:22 RNC: 0 PSC: 161</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:7 RNC: 0 PSC: 353</name>
+        <Placemark>
+          <name>43305/86831879 LTE</name>
+          <description>~894 (m), Владимирская область, Струнино, Соколово, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.588753,56.397465</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:8 RNC: 0 PSC: 207</name>
+        <Placemark>
+          <name>43305/86831880 LTE</name>
+          <description>~258 (m), Владимирская область, ул. Лермонтова, 3В, Струнино, Владимирская обл., Россия, 601672</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.581715,56.372543</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:9 RNC: 0 PSC: 19</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:21 RNC: 0 PSC: 32</name>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:22 RNC: 0 PSC: 90</name>
+        <Placemark>
+          <name>43305/86831894 LTE</name>
+          <description>~250 (m), Владимирская область, Первомайская ул., 1, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.594002,56.378666</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+      <Folder>
+        <open>0</open>
+        <name>LAC: 43305 CID: 339187:32 RNC: 0 PSC: 207</name>
+        <Placemark>
+          <name>43305/86831904 LTE</name>
+          <description>~361 (m), Владимирская область, ул. Фрунзе, 2, Струнино, Владимирская обл., Россия, 601670</description>
+          <styleUrl>#style_cur</styleUrl>
+          <Point>
+            <coordinates>38.583435,56.376945</coordinates>
+          </Point>
+        </Placemark>
+      </Folder>
+    </Folder>
+  </Document>
+</kml>
