@@ -23,15 +23,17 @@ export interface StationVisibility {
 
 export interface SignalPrediction {
   stationId: string;
-  baselineDbm: Dbm;
-  interpolatedDbm: Dbm;
+  baselineDbm: Dbm | null;
+  interpolatedDbm: Dbm | null;
   quality: SignalQuality;
   nearbySamplesUsed: number;
+  hasCalibration: boolean;
+  dataStatus: 'ok' | 'insufficient_data';
 }
 
 export type SignalQuality = 'excellent' | 'good' | 'fair' | 'poor' | 'unusable';
 
-export type TriangulationStatus = 'available' | 'degraded' | 'unavailable';
+export type TriangulationStatus = 'available' | 'degraded' | 'unavailable' | 'insufficient_data';
 
 export interface SignalForecast {
   target: GeoPoint;

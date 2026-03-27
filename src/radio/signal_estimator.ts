@@ -16,6 +16,10 @@ interface StationCalibration {
   pathLossExponent: number;
 }
 
+type BaselinePrediction =
+  | { hasCalibration: false }
+  | { hasCalibration: true; baselineDbm: number };
+
 export interface SignalEstimatorOptions {
   /**
    * Типичный exponent для городской среды: 2.2..3.5.
@@ -28,6 +32,7 @@ export interface SignalEstimatorOptions {
   triangulationDbmThreshold: number;
   minVisibleStationsForTriangulation: number;
   majorityRatio: number;
+  strictValidation: boolean;
 }
 
 const DEFAULT_OPTIONS: SignalEstimatorOptions = {
@@ -39,6 +44,7 @@ const DEFAULT_OPTIONS: SignalEstimatorOptions = {
   triangulationDbmThreshold: -112,
   minVisibleStationsForTriangulation: 3,
   majorityRatio: 0.6,
+  strictValidation: false,
 };
 
 export class SignalEstimator {
@@ -90,10 +96,26 @@ export class SignalEstimator {
 
   forecastAtPoint(target: GeoPoint, visibleStations: StationVisibility[], allSamples: SignalSample[]): SignalForecast {
     const samplesByStation = groupBy(allSamples, (s) => s.stationId);
+    let hasMissingCalibration = false;
 
     const perStation: SignalPrediction[] = visibleStations.map((station) => {
       const stationSamples = samplesByStation.get(station.stationId) ?? [];
-      const baselineDbm = this.predictBaseline(target, station);
+      const baselinePrediction = this.predictBaseline(target, station);
+
+      if (!baselinePrediction.hasCalibration) {
+        hasMissingCalibration = true;
+        return {
+          stationId: station.stationId,
+          baselineDbm: null,
+          interpolatedDbm: null,
+          quality: 'unusable',
+          nearbySamplesUsed: 0,
+          hasCalibration: false,
+          dataStatus: 'insufficient_data',
+        };
+      }
+
+      const baselineDbm = baselinePrediction.baselineDbm;
       const interpolatedDbm = this.interpolateResidual(target, station, stationSamples, baselineDbm);
 
       return {
@@ -102,25 +124,41 @@ export class SignalEstimator {
         interpolatedDbm,
         quality: classifySignal(interpolatedDbm),
         nearbySamplesUsed: this.selectNearbySamples(target, stationSamples).length,
+        hasCalibration: true,
+        dataStatus: 'ok',
       };
     });
 
-    const overallScore = perStation.length > 0
-      ? average(perStation.map((p) => normalizeDbmToScore(p.interpolatedDbm)))
+    const usablePredictions = perStation.filter((p) => p.interpolatedDbm !== null);
+    const overallScore = usablePredictions.length > 0
+      ? average(usablePredictions.map((p) => normalizeDbmToScore(p.interpolatedDbm ?? -120)))
       : 0;
     const overallDbm = scoreToDbm(overallScore);
     const overallQuality = classifySignal(overallDbm);
 
-    const strongEnough = perStation.filter((p) => p.interpolatedDbm >= this.options.triangulationDbmThreshold).length;
+    const strongEnough = usablePredictions.filter((p) => (p.interpolatedDbm ?? -200) >= this.options.triangulationDbmThreshold).length;
     const minRequired = Math.max(
       this.options.minVisibleStationsForTriangulation,
-      Math.ceil(perStation.length * this.options.majorityRatio),
+      Math.ceil(usablePredictions.length * this.options.majorityRatio),
     );
 
-    const canTriangulate = strongEnough >= minRequired;
-    const triangulationStatus = !canTriangulate
-      ? (strongEnough > 0 ? 'degraded' : 'unavailable')
-      : 'available';
+    const canTriangulate = !hasMissingCalibration && usablePredictions.length > 0 && strongEnough >= minRequired;
+    const triangulationStatus = hasMissingCalibration
+      ? 'insufficient_data'
+      : !canTriangulate
+        ? (strongEnough > 0 ? 'degraded' : 'unavailable')
+        : 'available';
+
+    if (this.options.strictValidation && hasMissingCalibration) {
+      return {
+        target,
+        perStation,
+        overallScore: 0,
+        overallQuality: 'unusable',
+        triangulationStatus: 'insufficient_data',
+        canTriangulate: false,
+      };
+    }
 
     return {
       target,
@@ -132,16 +170,23 @@ export class SignalEstimator {
     };
   }
 
-  private predictBaseline(target: GeoPoint, station: StationVisibility): number {
+  private predictBaseline(target: GeoPoint, station: StationVisibility): BaselinePrediction {
     const calibration = this.calibrations.get(station.stationId);
-    const exponent = calibration?.pathLossExponent ?? this.options.pathLossExponent;
-    const refDistance = calibration?.referenceDistanceM ?? this.options.referenceDistanceM;
+    if (!calibration) {
+      return {
+        hasCalibration: false,
+      };
+    }
+
+    const exponent = calibration.pathLossExponent;
+    const refDistance = calibration.referenceDistanceM;
 
     const d = Math.max(haversineDistanceMeters(target, station.location), refDistance);
-
-    // fallback если калибровки пока нет
-    const intercept = calibration?.intercept ?? -42;
-    return intercept - 10 * exponent * Math.log10(d / refDistance);
+    const baselineDbm = calibration.intercept - 10 * exponent * Math.log10(d / refDistance);
+    return {
+      hasCalibration: true,
+      baselineDbm,
+    };
   }
 
   private interpolateResidual(
@@ -161,7 +206,10 @@ export class SignalEstimator {
     for (const sample of nearby) {
       const distanceToTarget = Math.max(haversineDistanceMeters(target, sample.point), 1);
       const sampleBaseline = this.predictBaseline(sample.point, station);
-      const residual = sample.dbm - sampleBaseline;
+      if (!sampleBaseline.hasCalibration) {
+        continue;
+      }
+      const residual = sample.dbm - sampleBaseline.baselineDbm;
       const weight = 1 / Math.pow(distanceToTarget, this.options.idwPower);
 
       weightedResidual += residual * weight;
