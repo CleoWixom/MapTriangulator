@@ -1,20 +1,6 @@
 import type { ChangeEvent } from 'react';
-import type { CoverageConfig } from '../../config/coverage';
-import type { CoverageFilters } from '../../map/filters/coverageFilters';
-import type { RadioTech } from '../../types/baseStation';
-
-interface CoverageControlsProps {
-  visible: boolean;
-  config: CoverageConfig;
-  filters: CoverageFilters;
-  onVisibleChange: (value: boolean) => void;
-  onOpacityChange: (value: number) => void;
-  onTechColorChange: (tech: RadioTech, color: string) => void;
-  onTechFilterToggle: (tech: RadioTech, enabled: boolean) => void;
-  onMccChange: (mcc?: number) => void;
-  onMncChange: (mnc?: number) => void;
-  onRadiusRangeChange: (min?: number, max?: number) => void;
-}
+import type { RadioTech } from '../../types/cells';
+import type { CoverageControlsProps } from './coverageTypes';
 
 const techList: RadioTech[] = ['LTE', 'GSM', 'WCDMA', 'UNKNOWN'];
 
@@ -29,13 +15,15 @@ export function CoverageControls({
   config,
   filters,
   onVisibleChange,
-  onOpacityChange,
   onTechColorChange,
   onTechFilterToggle,
   onMccChange,
   onMncChange,
   onRadiusRangeChange,
 }: CoverageControlsProps) {
+  const minRadius = filters.radiusRange?.min;
+  const maxRadius = filters.radiusRange?.max;
+
   return (
     <section>
       <h3>Coverage</h3>
@@ -49,18 +37,6 @@ export function CoverageControls({
         Show coverage radii
       </label>
 
-      <label>
-        Opacity
-        <input
-          type="range"
-          min={0}
-          max={1}
-          step={0.05}
-          value={config.opacity}
-          onChange={(event) => onOpacityChange(Number(event.target.value))}
-        />
-      </label>
-
       <fieldset>
         <legend>Color by technology</legend>
         {techList.map((tech) => (
@@ -68,7 +44,7 @@ export function CoverageControls({
             {tech}
             <input
               type="color"
-              value={config.tech[tech].color}
+              value={config.radiusFallbackByTech[tech].style.color}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 onTechColorChange(tech, event.target.value)
               }
@@ -116,9 +92,9 @@ export function CoverageControls({
           Radius min (m)
           <input
             type="number"
-            value={filters.minRadius ?? ''}
+            value={minRadius ?? ''}
             onChange={(event) =>
-              onRadiusRangeChange(parseOptionalNumber(event.target.value), filters.maxRadius)
+              onRadiusRangeChange(parseOptionalNumber(event.target.value), maxRadius)
             }
           />
         </label>
@@ -127,9 +103,9 @@ export function CoverageControls({
           Radius max (m)
           <input
             type="number"
-            value={filters.maxRadius ?? ''}
+            value={maxRadius ?? ''}
             onChange={(event) =>
-              onRadiusRangeChange(filters.minRadius, parseOptionalNumber(event.target.value))
+              onRadiusRangeChange(minRadius, parseOptionalNumber(event.target.value))
             }
           />
         </label>

@@ -1,11 +1,14 @@
-import { defaultCoverageConfig, type CoverageConfig } from '../config/coverage';
+import {
+  DEFAULT_COVERAGE_CONFIG,
+  type CoverageConfig,
+} from './config/coverage';
 import {
   defaultCoverageFilters,
-  filterStationsByCoverage,
+  filterCoverageCircles,
   type CoverageFilters,
 } from './filters/coverageFilters';
-import { buildCoverageLayer, type CoverageLayerData } from './layers/coverage';
-import type { BaseStation, RadioTech } from '../types/baseStation';
+import { buildCoverageCircles } from './layers/coverage';
+import type { BaseStation, CoverageCircle, RadioTech } from '../types/cells';
 
 export interface CoverageState {
   visible: boolean;
@@ -15,16 +18,20 @@ export interface CoverageState {
 
 export const defaultCoverageState: CoverageState = {
   visible: true,
-  config: defaultCoverageConfig,
+  config: DEFAULT_COVERAGE_CONFIG,
   filters: defaultCoverageFilters,
 };
 
 export function buildCoverageFromState(
   stations: BaseStation[],
   state: CoverageState,
-): CoverageLayerData {
-  const filteredStations = filterStationsByCoverage(stations, state.filters, state.config);
-  return buildCoverageLayer(filteredStations, state.config, state.visible);
+): CoverageCircle[] {
+  if (!state.visible) {
+    return [];
+  }
+
+  const circles = buildCoverageCircles(stations, state.config);
+  return filterCoverageCircles(circles, state.filters);
 }
 
 export function toggleTechFilter(
