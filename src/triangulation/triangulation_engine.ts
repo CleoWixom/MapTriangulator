@@ -34,6 +34,14 @@ export class TriangulationEngine {
       };
     }
 
+    if (signalForecast.triangulationStatus === 'insufficient_data') {
+      return {
+        status: 'insufficient_data',
+        reason: 'Нет обязательных калибровочных данных станции, расчёт synthetic-прогноза запрещён.',
+        signalForecast,
+      };
+    }
+
     return {
       status: 'unavailable',
       reason: 'Для большинства станций прогноз ниже порога, триангуляция недоступна.',

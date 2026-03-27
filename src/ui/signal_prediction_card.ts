@@ -2,15 +2,16 @@ import { SignalForecast, SignalPrediction } from '../types/radio';
 
 export interface PredictionCardRow {
   stationId: string;
-  predictedDbm: number;
+  predictedDbm: number | null;
   qualityLabel: string;
+  dataStatus: SignalPrediction['dataStatus'];
 }
 
 export interface PredictionCardModel {
   title: string;
   rows: PredictionCardRow[];
   triangulationVerdict: 'можно триангулировать' | 'нельзя триангулировать';
-  statusBadge: 'available' | 'degraded' | 'unavailable';
+  statusBadge: SignalForecast['triangulationStatus'];
 }
 
 export function buildPredictionCardModel(forecast: SignalForecast): PredictionCardModel {
@@ -30,7 +31,7 @@ export function renderPredictionCardHtml(forecast: SignalForecast): string {
       (row) => `
         <tr>
           <td>${escapeHtml(row.stationId)}</td>
-          <td>${row.predictedDbm.toFixed(1)} dBm</td>
+          <td>${row.predictedDbm === null ? 'n/a' : `${row.predictedDbm.toFixed(1)} dBm`}</td>
           <td>${escapeHtml(row.qualityLabel)}</td>
         </tr>`,
     )
@@ -59,6 +60,7 @@ function toRow(prediction: SignalPrediction): PredictionCardRow {
     stationId: prediction.stationId,
     predictedDbm: prediction.interpolatedDbm,
     qualityLabel: qualityToRu(prediction.quality),
+    dataStatus: prediction.dataStatus,
   };
 }
 
