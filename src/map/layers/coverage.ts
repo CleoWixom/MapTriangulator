@@ -1,106 +1,87 @@
-import type { CoverageConfig } from '../../config/coverage';
-import type { BaseStation, RadioTech } from '../../types/baseStation';
+import type { BaseStation, CoverageCircle, RadioTech } from '../../types/cells';
+import {
+  DEFAULT_COVERAGE_CONFIG,
+  type CoverageConfig,
+} from '../config/coverage';
 
-const DESCRIPTION_RADIUS_RE = /~\s*(\d+(?:[.,]\d+)?)\s*\(m\)/i;
+const RADIUS_FROM_DESCRIPTION_REGEX = /~\s*(\d+(?:[.,]\d+)?)\s*\((?:m|meter|meters)\)/i;
 
-export interface CoverageFeatureProperties {
-  stationId: string;
-  mcc: number;
-  mnc: number;
-  tech: RadioTech;
-  radius: number;
-  fill: string;
-  fillOpacity: number;
-}
+export const normalizeTech = (rawTech?: string): RadioTech => {
+  const tech = (rawTech || '').trim().toUpperCase();
 
-export interface CoverageFeature {
-  type: 'Feature';
-  geometry: {
-    type: 'Polygon';
-    coordinates: number[][][];
-  };
-  properties: CoverageFeatureProperties;
-}
-
-export interface CoverageLayerData {
-  type: 'FeatureCollection';
-  features: CoverageFeature[];
-}
-
-export function parseRadiusFromDescription(description?: string): number | undefined {
-  if (!description) return undefined;
-
-  const match = description.match(DESCRIPTION_RADIUS_RE);
-  if (!match?.[1]) return undefined;
-
-  const parsed = Number(match[1].replace(',', '.'));
-  if (!Number.isFinite(parsed) || parsed <= 0) return undefined;
-  return parsed;
-}
-
-export function resolveCoverageRadius(station: BaseStation, config: CoverageConfig): number {
-  const parsedRadius = parseRadiusFromDescription(station.description);
-  if (parsedRadius) {
-    return parsedRadius;
+  if (tech.includes('LTE')) {
+    return 'LTE';
   }
 
-  return config.tech[station.tech].radiusMeters;
-}
-
-function createCirclePolygon(
-  lon: number,
-  lat: number,
-  radiusMeters: number,
-  segments = 64,
-): number[][][] {
-  const earthRadius = 6_378_137;
-  const dLat = radiusMeters / earthRadius;
-  const dLon = radiusMeters / (earthRadius * Math.cos((Math.PI * lat) / 180));
-
-  const ring: number[][] = [];
-
-  for (let i = 0; i <= segments; i += 1) {
-    const theta = (2 * Math.PI * i) / segments;
-    const pointLat = lat + (dLat * Math.sin(theta) * 180) / Math.PI;
-    const pointLon = lon + (dLon * Math.cos(theta) * 180) / Math.PI;
-    ring.push([pointLon, pointLat]);
+  if (tech.includes('WCDMA') || tech.includes('UMTS')) {
+    return 'WCDMA';
   }
 
-  return [ring];
-}
+  if (tech.includes('GSM') || tech.includes('2G')) {
+    return 'GSM';
+  }
 
-export function buildCoverageLayer(
+  return 'UNKNOWN';
+};
+
+export const extractRadiusFromDescription = (
+  description?: string,
+): number | undefined => {
+  if (!description) {
+    return undefined;
+  }
+
+  const match = description.match(RADIUS_FROM_DESCRIPTION_REGEX);
+  if (!match) {
+    return undefined;
+  }
+
+  const normalized = match[1].replace(',', '.');
+  const parsed = Number.parseFloat(normalized);
+
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
+export const resolveCoverageRadius = (
+  station: BaseStation,
+  config: CoverageConfig = DEFAULT_COVERAGE_CONFIG,
+): number => {
+  const fromDescription = extractRadiusFromDescription(station.description);
+  if (typeof fromDescription === 'number') {
+    return fromDescription;
+  }
+
+  const tech = normalizeTech(station.tech);
+  return config.radiusFallbackByTech[tech].radiusMeters;
+};
+
+export const buildCoverageCircles = (
   stations: BaseStation[],
-  config: CoverageConfig,
-  isVisible: boolean,
-): CoverageLayerData {
-  if (!isVisible) {
-    return { type: 'FeatureCollection', features: [] };
+  config: CoverageConfig = DEFAULT_COVERAGE_CONFIG,
+): CoverageCircle[] => {
+  if (!config.showCoverage) {
+    return [];
   }
 
-  const features = stations.map((station): CoverageFeature => {
-    const radius = resolveCoverageRadius(station, config);
+  return stations
+    .map((station): CoverageCircle => {
+      const tech = normalizeTech(station.tech);
+      const radiusMeters = resolveCoverageRadius(station, config);
+      const style = config.radiusFallbackByTech[tech].style;
 
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Polygon',
-        coordinates: createCirclePolygon(station.lon, station.lat, radius),
-      },
-      properties: {
+      return {
         stationId: station.id,
+        center: [station.lat, station.lon],
+        radiusMeters,
+        tech,
         mcc: station.mcc,
         mnc: station.mnc,
-        tech: station.tech,
-        radius,
-        fill: config.tech[station.tech].color,
-        fillOpacity: config.opacity,
-      },
-    };
-  });
-
-  return {
-    type: 'FeatureCollection',
-    features,
-  };
-}
+        style,
+      };
+    })
+    .filter(
+      (circle) =>
+        circle.radiusMeters >= config.minRadiusMeters &&
+        circle.radiusMeters <= config.maxRadiusMeters,
+    );
+};

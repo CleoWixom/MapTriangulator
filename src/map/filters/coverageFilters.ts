@@ -1,46 +1,39 @@
-import type { BaseStation, RadioTech } from '../../types/baseStation';
-import { resolveCoverageRadius } from '../layers/coverage';
-import type { CoverageConfig } from '../../config/coverage';
+import type { CoverageCircle, RadioTech } from '../../types/cells';
 
 export interface CoverageFilters {
   mcc?: number;
   mnc?: number;
-  tech: RadioTech[];
-  minRadius?: number;
-  maxRadius?: number;
+  tech?: RadioTech[];
+  radiusRange?: {
+    min: number;
+    max: number;
+  };
 }
 
-export const defaultCoverageFilters: CoverageFilters = {
-  tech: ['LTE', 'GSM', 'WCDMA', 'UNKNOWN'],
-};
-
-export function filterStationsByCoverage(
-  stations: BaseStation[],
+export const filterCoverageCircles = (
+  circles: CoverageCircle[],
   filters: CoverageFilters,
-  config: CoverageConfig,
-): BaseStation[] {
-  return stations.filter((station) => {
-    if (filters.mcc != null && station.mcc !== filters.mcc) {
+): CoverageCircle[] => {
+  return circles.filter((circle) => {
+    if (typeof filters.mcc === 'number' && circle.mcc !== filters.mcc) {
       return false;
     }
 
-    if (filters.mnc != null && station.mnc !== filters.mnc) {
+    if (typeof filters.mnc === 'number' && circle.mnc !== filters.mnc) {
       return false;
     }
 
-    if (filters.tech.length > 0 && !filters.tech.includes(station.tech)) {
+    if (filters.tech?.length && !filters.tech.includes(circle.tech)) {
       return false;
     }
 
-    const radius = resolveCoverageRadius(station, config);
-    if (filters.minRadius != null && radius < filters.minRadius) {
-      return false;
-    }
-
-    if (filters.maxRadius != null && radius > filters.maxRadius) {
-      return false;
+    if (filters.radiusRange) {
+      const { min, max } = filters.radiusRange;
+      if (circle.radiusMeters < min || circle.radiusMeters > max) {
+        return false;
+      }
     }
 
     return true;
   });
-}
+};
