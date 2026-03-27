@@ -1,4 +1,4 @@
-import type { CoverageConfig } from './index';
+import type { CoverageConfig } from '../config/coverage';
 import type { CoverageState } from '../coverageModel';
 import type { CoverageFilters } from '../filters/coverageFilters';
 import type { CoverageControlsProps } from '../../ui/components/coverageTypes';
