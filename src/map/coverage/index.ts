@@ -1,7 +1,6 @@
 export {
   DEFAULT_COVERAGE_CONFIG,
   type CoverageConfig,
-  type CoverageTechConfig,
 } from '../config/coverage';
 export {
   defaultCoverageFilters,
@@ -11,7 +10,6 @@ export {
 export {
   buildCoverageCircles,
   calculateCoverageRadiusQuality,
-  extractRadiusFromDescription,
   normalizeTech,
   resolveCoverageRadius,
   type CoverageRadiusQuality,

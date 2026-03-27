@@ -9,8 +9,6 @@ import {
   type CoverageConfig,
 } from '../config/coverage';
 
-const RADIUS_FROM_DESCRIPTION_REGEX = /~\s*(\d+(?:[.,]\d+)?)\s*\((?:m|meter|meters)\)/i;
-
 export const normalizeTech = (rawTech?: string): RadioTech => {
   const tech = (rawTech || '').trim().toUpperCase();
 
@@ -29,27 +27,8 @@ export const normalizeTech = (rawTech?: string): RadioTech => {
   return 'UNKNOWN';
 };
 
-export const extractRadiusFromDescription = (
-  description?: string,
-): number | undefined => {
-  if (!description) {
-    return undefined;
-  }
-
-  const match = description.match(RADIUS_FROM_DESCRIPTION_REGEX);
-  if (!match) {
-    return undefined;
-  }
-
-  const normalized = match[1].replace(',', '.');
-  const parsed = Number.parseFloat(normalized);
-
-  return Number.isFinite(parsed) ? parsed : undefined;
-};
-
 export const resolveCoverageRadius = (
   station: BaseStation,
-  config: CoverageConfig = DEFAULT_COVERAGE_CONFIG,
 ): {
   radiusMeters?: number;
   radiusSource: CoverageRadiusSource;
@@ -75,22 +54,6 @@ export const resolveCoverageRadius = (
     };
   }
 
-  const fromDescription = extractRadiusFromDescription(station.description);
-  if (typeof fromDescription === 'number') {
-    return {
-      radiusMeters: fromDescription,
-      radiusSource: 'modeled',
-    };
-  }
-
-  if (config.enableLegacyFallbackRadii) {
-    const tech = normalizeTech(station.tech);
-    return {
-      radiusMeters: config.radiusFallbackByTech[tech].radiusMeters,
-      radiusSource: 'modeled',
-    };
-  }
-
   return {
     radiusSource: 'missing',
   };
@@ -105,11 +68,10 @@ export interface CoverageRadiusQuality {
 
 export const calculateCoverageRadiusQuality = (
   stations: BaseStation[],
-  config: CoverageConfig = DEFAULT_COVERAGE_CONFIG,
 ): CoverageRadiusQuality => {
   const totalStations = stations.length;
   const withRealRadius = stations.reduce((count, station) => {
-    const { radiusSource } = resolveCoverageRadius(station, config);
+    const { radiusSource } = resolveCoverageRadius(station);
     return radiusSource === 'missing' ? count : count + 1;
   }, 0);
 
@@ -135,12 +97,12 @@ export const buildCoverageCircles = (
   return stations
     .map((station): CoverageCircle | undefined => {
       const tech = normalizeTech(station.tech);
-      const { radiusMeters, radiusSource } = resolveCoverageRadius(station, config);
+      const { radiusMeters, radiusSource } = resolveCoverageRadius(station);
       if (typeof radiusMeters !== 'number' || radiusSource === 'missing') {
         return undefined;
       }
 
-      const style = config.radiusFallbackByTech[tech].style;
+      const style = config.radiusStyleByTech[tech];
 
       return {
         stationId: station.id,

@@ -42,7 +42,7 @@ export function buildCoverageRadiusQualityFromState(
   stations: BaseStation[],
   state: CoverageState,
 ): CoverageRadiusQuality {
-  return calculateCoverageRadiusQuality(stations, state.config);
+  return calculateCoverageRadiusQuality(stations);
 }
 
 export function toggleTechFilter(
