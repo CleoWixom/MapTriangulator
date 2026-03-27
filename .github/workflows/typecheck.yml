@@ -1,0 +1,23 @@
+name: TypeScript typecheck
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run typecheck for src (.ts/.tsx)
+        run: npx --yes --package typescript tsc --project tsconfig.typecheck.json
