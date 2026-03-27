@@ -6,6 +6,11 @@ export interface CoverageControlsProps {
   visible: boolean;
   config: CoverageConfig;
   filters: CoverageFilters;
+  radiusQuality?: {
+    totalStations: number;
+    missingRadius: number;
+    missingShare: number;
+  };
   onVisibleChange: (value: boolean) => void;
   onTechColorChange: (tech: RadioTech, color: string) => void;
   onTechFilterToggle: (tech: RadioTech, enabled: boolean) => void;

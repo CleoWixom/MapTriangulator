@@ -7,7 +7,11 @@ import {
   filterCoverageCircles,
   type CoverageFilters,
 } from './filters/coverageFilters';
-import { buildCoverageCircles } from './layers/coverage';
+import {
+  buildCoverageCircles,
+  calculateCoverageRadiusQuality,
+  type CoverageRadiusQuality,
+} from './layers/coverage';
 import type { BaseStation, CoverageCircle, RadioTech } from '../types/cells';
 
 export interface CoverageState {
@@ -32,6 +36,13 @@ export function buildCoverageFromState(
 
   const circles = buildCoverageCircles(stations, state.config);
   return filterCoverageCircles(circles, state.filters);
+}
+
+export function buildCoverageRadiusQualityFromState(
+  stations: BaseStation[],
+  state: CoverageState,
+): CoverageRadiusQuality {
+  return calculateCoverageRadiusQuality(stations, state.config);
 }
 
 export function toggleTechFilter(
