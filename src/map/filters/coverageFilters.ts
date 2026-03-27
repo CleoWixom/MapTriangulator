@@ -3,12 +3,16 @@ import type { CoverageCircle, RadioTech } from '../../types/cells';
 export interface CoverageFilters {
   mcc?: number;
   mnc?: number;
-  tech?: RadioTech[];
+  tech: RadioTech[];
   radiusRange?: {
     min: number;
     max: number;
   };
 }
+
+export const defaultCoverageFilters: CoverageFilters = {
+  tech: [],
+};
 
 export const filterCoverageCircles = (
   circles: CoverageCircle[],
@@ -23,7 +27,7 @@ export const filterCoverageCircles = (
       return false;
     }
 
-    if (filters.tech?.length && !filters.tech.includes(circle.tech)) {
+    if (filters.tech.length > 0 && !filters.tech.includes(circle.tech)) {
       return false;
     }
 

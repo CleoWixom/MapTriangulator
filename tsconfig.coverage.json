@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "src/types/cells.ts",
+    "src/map/config/coverage.ts",
+    "src/map/filters/coverageFilters.ts",
+    "src/map/layers/coverage.ts",
+    "src/map/coverageModel.ts",
+    "src/map/coverage/index.ts",
+    "src/map/coverage/typecheck.ts",
+    "src/ui/components/coverageTypes.ts"
+  ]
+}
