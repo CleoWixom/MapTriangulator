@@ -52,7 +52,7 @@ export function CoverageControls({
             {tech}
             <input
               type="color"
-              value={config.radiusFallbackByTech[tech].style.color}
+              value={config.radiusStyleByTech[tech].color}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 onTechColorChange(tech, event.target.value)
               }
