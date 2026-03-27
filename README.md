@@ -35,7 +35,7 @@ Files:
 Use the dedicated config for type-checking:
 
 ```bash
-npx --yes --package typescript tsc --project tsconfig.typecheck.json
+tsc --project tsconfig.typecheck.json
 ```
 
 Or via Make:
