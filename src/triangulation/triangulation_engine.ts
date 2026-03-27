@@ -1,5 +1,6 @@
 import { SignalEstimator } from '../radio/signal_estimator';
-import { GeoPoint, SignalForecast, SignalSample, StationVisibility, TriangulationStatus } from '../types/radio';
+import { ingestRadioPayload } from '../radio/ingestion';
+import { GeoPoint, KmlIngestionPayloadDto, SignalForecast, TriangulationStatus } from '../types/radio';
 
 export interface TriangulationDecision {
   status: TriangulationStatus;
@@ -12,9 +13,9 @@ export class TriangulationEngine {
 
   evaluatePoint(
     point: GeoPoint,
-    visibleStations: StationVisibility[],
-    signalSamples: SignalSample[],
+    payload: KmlIngestionPayloadDto,
   ): TriangulationDecision {
+    const { stations: visibleStations, samples: signalSamples } = ingestRadioPayload(payload);
     const signalForecast = this.signalEstimator.forecastAtPoint(point, visibleStations, signalSamples);
 
     if (signalForecast.triangulationStatus === 'available') {

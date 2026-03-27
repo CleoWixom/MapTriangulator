@@ -9,3 +9,11 @@ export interface BaseStation {
   tech: RadioTech;
   description?: string;
 }
+
+export interface StationIdComponents {
+  mcc: number;
+  mnc: number;
+  lac: number;
+  cid: string;
+  psc: number;
+}

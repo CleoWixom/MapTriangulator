@@ -1,11 +1,13 @@
 import {
   GeoPoint,
+  KmlIngestionPayloadDto,
   SignalForecast,
   SignalPrediction,
   SignalQuality,
   SignalSample,
   StationVisibility,
 } from '../types/radio';
+import { ingestRadioPayload } from './ingestion';
 
 interface StationCalibration {
   stationId: string;
@@ -47,7 +49,8 @@ export class SignalEstimator {
     this.options = { ...DEFAULT_OPTIONS, ...options };
   }
 
-  calibrateFromSamples(samples: SignalSample[], stationCatalog: StationVisibility[]): void {
+  calibrateFromSamples(payload: KmlIngestionPayloadDto): void {
+    const { samples, stations: stationCatalog } = ingestRadioPayload(payload);
     const groupedSamples = groupBy(samples, (s) => s.stationId);
     const stationMap = new Map(stationCatalog.map((s) => [s.stationId, s]));
 

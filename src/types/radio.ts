@@ -41,3 +41,51 @@ export interface SignalForecast {
   triangulationStatus: TriangulationStatus;
   canTriangulate: boolean;
 }
+
+export interface PyOperatorGroupDto {
+  mcc: number;
+  mnc: number;
+}
+
+export interface PyCellSiteDto {
+  name: string;
+  radio: string;
+  lat: number;
+  lon: number;
+  operator?: PyOperatorGroupDto;
+  lac?: number;
+  cid?: string;
+  rnc?: number;
+  psc?: number;
+  station_id?: string;
+  style_url?: string;
+  distance_m?: number;
+  accuracy?: number;
+  change_type?: string;
+  timestamp?: string;
+  description?: string;
+}
+
+export interface PySignalSampleDto {
+  dbm: number;
+  lat: number;
+  lon: number;
+  operator?: PyOperatorGroupDto;
+  lac?: number;
+  cid?: string;
+  rnc?: number;
+  psc?: number;
+  station_id?: string;
+  style_url?: string;
+  accuracy?: number;
+  change_type?: string;
+  timestamp?: string;
+  description?: string;
+}
+
+export interface KmlIngestionPayloadDto {
+  schema_version: string;
+  cell_sites: PyCellSiteDto[];
+  signal_samples: PySignalSampleDto[];
+  warnings: string[];
+}

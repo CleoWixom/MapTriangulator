@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 import re
-from typing import Optional
+from typing import Optional, TypedDict
 import xml.etree.ElementTree as ET
 
 KML_NS = "http://www.opengis.net/kml/2.2"
@@ -87,6 +87,145 @@ class KmlParseResult:
     gps_tracks: list[GpsTrack] = field(default_factory=list)
     styles: list[StyleDef] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+
+
+class IngestionOperatorGroup(TypedDict):
+    mcc: int
+    mnc: int
+
+
+class IngestionCellSite(TypedDict, total=False):
+    name: str
+    radio: str
+    lat: float
+    lon: float
+    operator: IngestionOperatorGroup
+    lac: int
+    cid: str
+    rnc: int
+    psc: int
+    station_id: str
+    style_url: str
+    distance_m: float
+    accuracy: float
+    change_type: str
+    timestamp: str
+    description: str
+
+
+class IngestionSignalSample(TypedDict, total=False):
+    dbm: float
+    lat: float
+    lon: float
+    operator: IngestionOperatorGroup
+    lac: int
+    cid: str
+    rnc: int
+    psc: int
+    station_id: str
+    style_url: str
+    accuracy: float
+    change_type: str
+    timestamp: str
+    description: str
+
+
+class KmlIngestionPayload(TypedDict):
+    schema_version: str
+    cell_sites: list[IngestionCellSite]
+    signal_samples: list[IngestionSignalSample]
+    warnings: list[str]
+
+
+class IngestionContractError(ValueError):
+    pass
+
+
+def normalize_station_id(mcc: int, mnc: int, lac: int, cid: str, psc: int) -> str:
+    cid_normalized = str(cid).strip()
+    if not cid_normalized:
+        raise IngestionContractError("stationId normalization failed: CID is empty")
+    return f"{int(mcc)}-{int(mnc)}-{int(lac)}-{cid_normalized}-{int(psc)}"
+
+
+def to_ingestion_payload(parsed: KmlParseResult) -> KmlIngestionPayload:
+    cell_sites: list[IngestionCellSite] = []
+    signal_samples: list[IngestionSignalSample] = []
+
+    for idx, site in enumerate(parsed.cell_sites):
+        if site.operator is None or site.lac is None or site.cid is None or site.psc is None:
+            raise IngestionContractError(
+                f"cell_sites[{idx}] is missing station ID parts (operator/lac/cid/psc)"
+            )
+
+        station_id = normalize_station_id(
+            mcc=site.operator.mcc,
+            mnc=site.operator.mnc,
+            lac=site.lac,
+            cid=site.cid,
+            psc=site.psc,
+        )
+
+        cell_sites.append(
+            {
+                "name": site.name,
+                "radio": site.radio,
+                "lat": site.lat,
+                "lon": site.lon,
+                "operator": {"mcc": site.operator.mcc, "mnc": site.operator.mnc},
+                "lac": site.lac,
+                "cid": site.cid,
+                "rnc": site.rnc,
+                "psc": site.psc,
+                "station_id": station_id,
+                "style_url": site.style_url,
+                "distance_m": site.distance_m,
+                "accuracy": site.accuracy,
+                "change_type": site.change_type,
+                "timestamp": site.timestamp,
+                "description": site.description,
+            }
+        )
+
+    for idx, sample in enumerate(parsed.signal_samples):
+        if sample.operator is None or sample.lac is None or sample.cid is None or sample.psc is None:
+            raise IngestionContractError(
+                f"signal_samples[{idx}] is missing station ID parts (operator/lac/cid/psc)"
+            )
+
+        station_id = normalize_station_id(
+            mcc=sample.operator.mcc,
+            mnc=sample.operator.mnc,
+            lac=sample.lac,
+            cid=sample.cid,
+            psc=sample.psc,
+        )
+
+        signal_samples.append(
+            {
+                "dbm": sample.dbm,
+                "lat": sample.lat,
+                "lon": sample.lon,
+                "operator": {"mcc": sample.operator.mcc, "mnc": sample.operator.mnc},
+                "lac": sample.lac,
+                "cid": sample.cid,
+                "rnc": sample.rnc,
+                "psc": sample.psc,
+                "station_id": station_id,
+                "style_url": sample.style_url,
+                "accuracy": sample.accuracy,
+                "change_type": sample.change_type,
+                "timestamp": sample.timestamp,
+                "description": sample.description,
+            }
+        )
+
+    return {
+        "schema_version": "1.0.0",
+        "cell_sites": cell_sites,
+        "signal_samples": signal_samples,
+        "warnings": list(parsed.warnings),
+    }
 
 
 def parse_kml_file(path: str | Path) -> KmlParseResult:
