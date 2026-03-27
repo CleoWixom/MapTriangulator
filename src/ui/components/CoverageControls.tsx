@@ -14,6 +14,7 @@ export function CoverageControls({
   visible,
   config,
   filters,
+  radiusQuality,
   onVisibleChange,
   onTechColorChange,
   onTechFilterToggle,
@@ -36,6 +37,13 @@ export function CoverageControls({
         />
         Show coverage radii
       </label>
+
+      {radiusQuality && (
+        <p>
+          Missing real radius: {radiusQuality.missingRadius}/{radiusQuality.totalStations} (
+          {(radiusQuality.missingShare * 100).toFixed(1)}%)
+        </p>
+      )}
 
       <fieldset>
         <legend>Color by technology</legend>

@@ -9,6 +9,11 @@ export interface CoverageConfig {
   showCoverage: boolean;
   minRadiusMeters: number;
   maxRadiusMeters: number;
+  /**
+   * Legacy debug mode: allows synthetic fallback radii by tech when station has
+   * no measured/modeled value. Disabled by default for production-like behavior.
+   */
+  enableLegacyFallbackRadii: boolean;
   radiusFallbackByTech: Record<RadioTech, CoverageTechConfig>;
 }
 
@@ -16,6 +21,7 @@ export const DEFAULT_COVERAGE_CONFIG: CoverageConfig = {
   showCoverage: true,
   minRadiusMeters: 0,
   maxRadiusMeters: 10_000,
+  enableLegacyFallbackRadii: false,
   radiusFallbackByTech: {
     LTE: {
       radiusMeters: 2000,
