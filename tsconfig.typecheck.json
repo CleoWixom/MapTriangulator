@@ -2,16 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
+    "module": "Node16",
     "moduleResolution": "node16"
   },
-  "include": [
-    "src/types/cells.ts",
-    "src/map/config/coverage.ts",
-    "src/map/filters/coverageFilters.ts",
-    "src/map/layers/coverage.ts",
-    "src/map/coverageModel.ts",
-    "src/map/coverage/index.ts",
-    "src/map/coverage/typecheck.ts",
-    "src/ui/components/coverageTypes.ts"
-  ]
+  "files": [
+    "src/map/coverage/typecheck.ts"
+  ],
+  "include": []
 }
