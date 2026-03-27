@@ -29,3 +29,17 @@ Files:
 - `src/ui/pointSelection.ts`
 - `src/ui/triangulationPresenter.ts`
 - `src/ui/domView.ts`
+
+## Type check
+
+Use the dedicated config for type-checking:
+
+```bash
+npx --yes --package typescript tsc --project tsconfig.typecheck.json
+```
+
+Or via Make:
+
+```bash
+make typecheck
+```

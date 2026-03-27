@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "Node16",
+    "moduleResolution": "node16"
+  },
+  "files": [
+    "src/map/coverage/typecheck.ts"
+  ],
+  "include": []
+}
