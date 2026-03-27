@@ -6,13 +6,9 @@
     "strict": true,
     "declaration": true,
     "outDir": "dist",
-    "lib": [
-      "ES2020",
-      "DOM"
-    ],
-    "skipLibCheck": true
+    "lib": ["ES2020", "DOM"],
+    "skipLibCheck": true,
+    "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
